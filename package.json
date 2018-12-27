@@ -11,6 +11,8 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "eosjs": "^16.0.9",
+    "eosjs-api": "^7.0.4",
     "muse-ui": "^3.0.1",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
