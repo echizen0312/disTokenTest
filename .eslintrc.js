@@ -21,9 +21,31 @@ module.exports = {
   ],
   // add your custom rules here
   rules: {
-    // allow async-await
     'generator-star-spacing': 'off',
     // allow debugger during development
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    "no-labels": 'off',
+    'no-unused-expressions':'off',
+    'space-before-function-paren': 'off',
+    'spaced-comment':'off',
+    'semi': 'off',
+    'no-var': 'error',
+    'no-trailing-spaces':'off',
+    'comma-spacing':'off',
+    'space-before-blocks':'off',
+    'space-infix-ops':'off',
+    'keyword-spacing':'off',
+    'eol-last':'off',
+    'space-unary-ops':'off',
+    'padded-blocks':'off',
+    'no-tabs':'off',
+    'brace-style':'off',
+    'eqeqeq':'off',
+    'no-mixed-spaces-and-tabs':'off',
+    'no-unneeded-ternary':'off',
+    'no-useless-return':'off',
+    'no-extend-native': 'off',
+    'operator-linebreak': 'off',
+    'indent': 'off'
   }
 }

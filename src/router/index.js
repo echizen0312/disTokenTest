@@ -1,15 +1,17 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+/* import Vue from 'vue'
+import Router from 'vue-router' */
+const Home = () => import('@/components/Home').then(m => m.default)
+const AccountList = () => import('@/components/AccountList').then(m => m.default)
 
-Vue.use(Router)
+const routes = [
+  { 
+    path: '/', 
+    name: 'home', 
+    component: Home,
+    children: [
+      { 'path': '/AccountList', component: AccountList, 'name': 'AccountList' }
+    ]
+  }
+]
 
-export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
-    }
-  ]
-})
+export default routes;
