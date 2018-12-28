@@ -5,10 +5,12 @@
     <mu-button class="sak-button" slot="actions" @click="getCurrencyStats">获取余额</mu-button>
     <mu-button class="sak-button" slot="actions" @click="getActions">获取交易记录</mu-button>
     <mu-button class="sak-button" slot="actions" @click="transaction">发起交易</mu-button>
+    <mu-button class="sak-button" slot="actions" @click="importAccount">导入账号</mu-button>
   </div>
 </template>
 
 <script>
+  let ecc = require('eosjs-ecc') // 引入EOS秘钥算法
   let Eos = require('eosjs') // 引入读写EOS
   let EosApi = require('eosjs-api') // 引入只读EOS
   let chainId = 'cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f' // 链ID
@@ -67,7 +69,7 @@
           chainId: chainId,
           httpEndpoint: httpEndpoint,
           keyProvider: pk
-        }) // 实例化只读接口对象
+        }) // 实例读写接口对象
         let tr = {
           actions: [
             {
@@ -87,6 +89,15 @@
           ]
         }
         eos.transaction(tr).then(r => {
+          console.log(r)
+        }).catch(e => {
+          console.log(e)
+        })
+      },
+      importAccount () {
+        let pk = '5JzHPSPmLSaZR7Xna7WqQkouZw5Hoq2BSR7kW2JgLgn6AruZgSU'
+        let pub = ecc.privateToPublic(pk)
+        eosApi.getKeyAccounts(pub).then(r => {
           console.log(r)
         }).catch(e => {
           console.log(e)
