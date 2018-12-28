@@ -10,6 +10,7 @@
 </template>
 
 <script>
+  let ecc = require('eosjs-ecc') // 引入EOS秘钥算法
   let Eos = require('eosjs') // 引入读写EOS
   let EosApi = require('eosjs-api') // 引入只读EOS
   let chainId = 'cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f' // 链ID
@@ -94,7 +95,13 @@
         })
       },
       importAccount () {
-        console.log(1)
+        let pk = '5JzHPSPmLSaZR7Xna7WqQkouZw5Hoq2BSR7kW2JgLgn6AruZgSU'
+        let pub = ecc.privateToPublic(pk)
+        eosApi.getKeyAccounts(pub).then(r => {
+          console.log(r)
+        }).catch(e => {
+          console.log(e)
+        })
       }
     }
   }
