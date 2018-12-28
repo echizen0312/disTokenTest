@@ -5,6 +5,7 @@
     <mu-button class="sak-button" slot="actions" @click="getCurrencyStats">获取余额</mu-button>
     <mu-button class="sak-button" slot="actions" @click="getActions">获取交易记录</mu-button>
     <mu-button class="sak-button" slot="actions" @click="transaction">发起交易</mu-button>
+    <mu-button class="sak-button" slot="actions" @click="importAccount">导入账号</mu-button>
   </div>
 </template>
 
@@ -67,7 +68,7 @@
           chainId: chainId,
           httpEndpoint: httpEndpoint,
           keyProvider: pk
-        }) // 实例化只读接口对象
+        }) // 实例读写接口对象
         let tr = {
           actions: [
             {
@@ -91,6 +92,9 @@
         }).catch(e => {
           console.log(e)
         })
+      },
+      importAccount () {
+        console.log(1)
       }
     }
   }
