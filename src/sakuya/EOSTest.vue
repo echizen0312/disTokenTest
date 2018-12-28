@@ -5,12 +5,13 @@
     <mu-button class="sak-button" slot="actions" @click="getCurrencyStats">获取余额</mu-button>
     <mu-button class="sak-button" slot="actions" @click="getActions">获取交易记录</mu-button>
     <mu-button class="sak-button" slot="actions" @click="transaction">发起交易</mu-button>
-    <mu-button class="sak-button" slot="actions" @click="importAccount">导入账号</mu-button>
+    <mu-button class="sak-button" slot="actions" @click="ceshi">发起交易</mu-button>
   </div>
 </template>
 
 <script>
-  let ecc = require('eosjs-ecc') // 引入EOS秘钥算法
+  import {mapState} from 'vuex';
+  import store from '../vuex/store'
   let Eos = require('eosjs') // 引入读写EOS
   let EosApi = require('eosjs-api') // 引入只读EOS
   let chainId = 'cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f' // 链ID
@@ -25,7 +26,10 @@
       return {}
     },
     created () {
-
+      store.dispatch('EosConfig/getInfos').then(res => {
+        console.log(res);
+      })
+      
     },
     methods: {
       getInfo () {
@@ -55,8 +59,8 @@
       },
       getActions () {
         let account = 'zj'
-        let pos = -1
-        let offset = -10
+        let pos = 0
+        let offset = 9
         eosApi.getActions(account, pos, offset).then(r => {
           console.log(r)
         }).catch(e => {
@@ -69,7 +73,7 @@
           chainId: chainId,
           httpEndpoint: httpEndpoint,
           keyProvider: pk
-        }) // 实例读写接口对象
+        }) // 实例化读写接口对象
         let tr = {
           actions: [
             {
@@ -94,16 +98,16 @@
           console.log(e)
         })
       },
-      importAccount () {
-        let pk = '5JzHPSPmLSaZR7Xna7WqQkouZw5Hoq2BSR7kW2JgLgn6AruZgSU'
-        let pub = ecc.privateToPublic(pk)
-        eosApi.getKeyAccounts(pub).then(r => {
-          console.log(r)
-        }).catch(e => {
-          console.log(e)
-        })
+      ceshi(){
+      console.log(this.configList);
       }
-    }
+    },
+    computed: {
+    ...mapState('EosConfig', {
+      configList: 'configList',
+      userInfo: 'userInfo'
+    })
+  }
   }
 </script>
 
@@ -114,3 +118,4 @@
     margin: 0 8px 8px 0;
   }
 </style>
+                                                             
