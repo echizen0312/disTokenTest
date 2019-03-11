@@ -3,35 +3,26 @@
  */
 import Vue from 'vue'
 import Vuex from 'vuex'
-import * as actions from './actions'
-import * as getters from './getters'
-import createPersistedState from 'vuex-persistedstate'
+import VuexPersist from 'vuex-persist'
+import session from './modules/Session'
+import EosConfig from './modules/EosConfig'
 
+const vuexPersist = new VuexPersist({
+  key: 'eos',
+  storage: localStorage
+})
 Vue.use(Vuex)
 
-const state = {
-  'login': {
-    'loginName': '',
-    'trustee': '',
-    'userType': '',
-    'eid': ''
-  }
-}
-
-const mutations = {
-  Slogin(state,data) {
-    let {loginName,trustee,userType,eId} =data;
-    state.login={...state.login,loginName: loginName,trustee: trustee,userType: userType,eid: eId};
-  }
-}
 export default new Vuex.Store({
-  state,
+  /* state,
   getters,
   mutations,
-  actions,
-  plugins: [
-    createPersistedState({storage: window.sessionStorage})
-  ]
+  actions, */
+  plugins: [vuexPersist.plugin],
+  modules: {
+    session,
+    EosConfig
+  }
 })
 /*
 let bus;

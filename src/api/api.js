@@ -6,7 +6,6 @@ const qs = require('qs');
 const service = axios.create({
   //设置默认请求头
   headers: {
-    'X-Requested-With': 'XMLHttpRequest',
     'content-type': 'application/x-www-form-urlencoded'
   },
   validateStatus: status => {
@@ -14,14 +13,19 @@ const service = axios.create({
       location.href='#/Login';
     } */
     return status >= 200 && status < 300;
-  },
-  withCredentials: true // 允许携带cookie
+  }
 })
-export default new class requestApi {
+export default new class api {
   constructor() {
     this.base = process.env.NODE_ENV === 'development'?'/wap/':'/expo/sys/';
   }
   getSession = (parmas) => {
     return service.get(`${this.base}getSession`, parmas).then(res => res)
   }
+  createAccount = (url,parmas) => {
+    return service.post(`${url}`, qs.stringify(parmas)).then(res => res)
+  }
+/*   getTokenList = (url,parmas) => {
+    return service.post(`${url}`, qs.stringify(parmas)).then(res => res)
+  } */
 }

@@ -1,22 +1,38 @@
 <template>
-  <div>
-    <div class="homeroute"><router-view ref="child"/></div>
-    <mu-bottom-nav class="mu_bottom_nav" @change="Gotabbar" :value="nowIndex">
-      <mu-bottom-nav-item title="钱包" icon="credit_card"></mu-bottom-nav-item>
-      <mu-bottom-nav-item title="游戏" icon="videogame_asset"></mu-bottom-nav-item>
-      <mu-bottom-nav-item title="买币" icon="store"></mu-bottom-nav-item>
-      <mu-bottom-nav-item title="创建" icon="person_add"></mu-bottom-nav-item>
-      <mu-bottom-nav-item title="测试" icon="block"></mu-bottom-nav-item>
-    </mu-bottom-nav>
+  <div class="UHomeMain">
+    <tabbar :value="nowIndex">
+      <tabbar-item @on-item-click="Gotabbar">
+        <img v-show="nowIndex==0" slot="icon" src="../../static/ico_08_b.png">
+        <img v-show="nowIndex!=0" slot="icon" src="../../static/ico_08_g.png">
+        <span slot="label">钱包</span>
+      </tabbar-item>
+      <tabbar-item @on-item-click="Gotabbar">
+        <img v-show="nowIndex==1" slot="icon" src="../../static/ico_09_b.png">
+        <img v-show="nowIndex!=1" slot="icon" src="../../static/ico_09_g.png">
+        <span slot="label">游戏</span>
+      </tabbar-item>
+      <tabbar-item @on-item-click="Gotabbar">
+        <img v-show="nowIndex==2" slot="icon" src="../../static/ico_10_b.png">
+        <img v-show="nowIndex!=2" slot="icon" src="../../static/ico_10_g.png">
+        <span slot="label">买币</span>
+      </tabbar-item>
+    </tabbar>
+    <router-view/>
   </div>
 </template>
 
 <script>
+import { Tabbar, TabbarItem } from 'vux'
+import {mapState} from 'vuex';
   export default {
+    components: {
+    Tabbar,
+    TabbarItem
+  },
     name: 'home',
     data () {
       return {
-        nowIndex: 0
+        nowIndex: null
       }
     },
     watch: {
@@ -25,55 +41,70 @@
       }
     },
     created () {
-      this.setNowIndex(this.$route.path)
+      if(this.$route.path==='/') return;
+      this.setNowIndex(this.$route.path);
     },
     methods: {
       Gotabbar (index) {
-        const that = this
-        that.nowIndex = index
+        const that = this;
+        that.nowIndex = index;
         switch (index) {
           case 0:
-            that.$router.push('/AccountList')
+          if(that.AccountId == ''){
+            that.$router.push('/HomeList');
+          }else{
+            that.$router.push(`/WalletHome/${that.AccountId}`);
+          }
             break
-          case '1':
-            console.log(123)
-            that.$router.push('/RankingList')
+          case 1:
+            that.$router.push('/GameList')
             break
           case 2:
-            that.$router.push('/PerCenter')
-            break
-          case 3:
-            that.$router.push('/PerCenter')
-            break
-          case 4:
-            that.$router.push('/EOSTest')
+            location.href = 'http://c2c.naturetoken.io/'
+            //that.$router.push('/PerCenter')
             break
         }
       },
       setNowIndex (path) {
         const that = this
-        if (path.includes('AccountList')) {
-          that.nowIndex = 0
+        if (path.includes('HomeList') || path.includes('CreateAccount') || path.includes('ImportAccount') || path.includes('WalletHome') || path.includes('Coindetails') || path.includes('AllTransferList') || path.includes('Transfer') || path.includes('Crosslinktransfer') || path.includes('RequestTransaction')) {
+          that.nowIndex = 0;
+        }
+        if(path.includes('GameList')){
+          that.nowIndex = 1;
         }
       }
+    },
+    computed: {
+      ...mapState('EosConfig', {
+        AccountId: 'AccountId'
+      })
     }
   }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="less" scoped>
-.homeroute{
-  width: 100%;
-  position: fixed;
-  top: 0;
-  bottom: 56px;
-  overflow: scroll;
-  background-color: #eeeeee;
+<style lang="less">
+.weui-tabbar__item.weui-bar__item_on .weui-tabbar__label{
+  color:#0ca3ef !important;
 }
-  .mu_bottom_nav {
-    width: 100%;
-    position: fixed;
-    bottom: 0;
-    border-top: 1px solid #e0e0e0;
-  }
+</style>
+<style scoped>
+.UHomeMain{
+  height: 100%;
+}
+h1, h2 {
+  font-weight: normal;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+a {
+  text-decoration: none;
+}
 </style>

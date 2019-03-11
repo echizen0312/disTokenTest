@@ -6,10 +6,13 @@
     <mu-button class="sak-button" slot="actions" @click="getActions">获取交易记录</mu-button>
     <mu-button class="sak-button" slot="actions" @click="transaction">发起交易</mu-button>
     <mu-button class="sak-button" slot="actions" @click="importAccount">导入账号</mu-button>
+      <mu-button class="sak-button" slot="actions" @click="ceshi">发起交易</mu-button>
   </div>
 </template>
 
 <script>
+  import {mapState} from 'vuex';
+  import store from '../vuex/store'
   let ecc = require('eosjs-ecc') // 引入EOS秘钥算法
   let Eos = require('eosjs') // 引入读写EOS
   let EosApi = require('eosjs-api') // 引入只读EOS
@@ -25,9 +28,14 @@
       return {}
     },
     created () {
-
+      store.dispatch('EosConfig/getInfos').then(res => {
+        console.log(res);
+      })
     },
     methods: {
+      ceshi(){
+      console.log(this.configList);
+      },
       getInfo () {
         eosApi.getInfo({}).then(r => {
           console.log(r)
@@ -103,6 +111,12 @@
           console.log(e)
         })
       }
+    },
+    computed: {
+      ...mapState('EosConfig', {
+        configList: 'configList',
+        userInfo: 'userInfo'
+      })
     }
   }
 </script>

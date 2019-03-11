@@ -46,6 +46,10 @@ module.exports = {
     'no-useless-return':'off',
     'no-extend-native': 'off',
     'operator-linebreak': 'off',
-    'indent': 'off'
+    'indent': 'off',
+    'new-parens': 'off',
+    'no-callback-literal': 'off',
+    'new-cap': 'off',
+    'no-undef': 'off'
   }
 }
