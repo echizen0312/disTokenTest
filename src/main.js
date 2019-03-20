@@ -55,7 +55,7 @@ router.beforeResolve((to, from, next) => {
   }else if(to.path=='/' && id == '' && List.length > 0){
     next({ path: '/HomeList' });
   }else if(to.path=='/' && id == '' && List.length == 0){
-    next({ path: '/HomeList' });
+    next({ path: '/guide' });
   }
   next()
 })
