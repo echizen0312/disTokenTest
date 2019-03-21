@@ -18,6 +18,7 @@ const PayeeQrcode = () => import('@/components/PayeeQrcode').then(m => m.default
 const Crosslinktransfer = () => import('@/components/Crosslinktransfer').then(m => m.default)
 const GameList = () => import('@/components/GameList').then(m => m.default)
 const RequestTransaction = () => import('@/components/RequestTransaction').then(m => m.default)
+const RequestTransfer = () => import('@/components/RequestTransfer').then(m => m.default)
 const hb = () => import('@/components/hongbao').then(m => m.default)
 
 const routes = [
@@ -39,6 +40,7 @@ const routes = [
       {'path': '/Crosslinktransfer/:id/:code/:symbol/:balance', component: Crosslinktransfer, 'name': 'Crosslinktransfer'},
       {'path': '/GameList', component: GameList, 'name': 'GameList'},
       {path: '/RequestTransaction/:netId/:accName/:tr',component: RequestTransaction, name: 'RequestTransaction'},
+      {path: '/RequestTransfer/:netId/:code/:symbol/:to/:number/:memo',component: RequestTransfer, name: 'RequestTransfer'},
       {'path': '/EOSTest', component: EOSTest, 'name': 'EOSTest'}
     ]
   },

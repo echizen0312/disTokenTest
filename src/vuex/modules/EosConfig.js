@@ -66,7 +66,9 @@ const actions = {
         Vue.prototype.$message({message: '私钥地址错误',type: 'error',center: true});
         return;
       }
+      Vue.$vux.loading.show({text: 'Loading'});
       eosApi.getKeyAccounts(pub).then(r => {
+        Vue.$vux.loading.hide();
         let ss = r.account_names
         if (ss !== undefined && ss.length === 1) {
           let accountName = ss[0]
@@ -117,6 +119,7 @@ const actions = {
         }
       }).catch(e => {
         success = false;
+        Vue.$vux.loading.hide();
         Vue.prototype.$message({message: '链接口错误',type: 'error',center: true});
         cb(success);
       })
@@ -319,7 +322,7 @@ const actions = {
           if(result[0].account_action_seq == 0){
             IsAll = false;
           }else{
-            cp = result[0].account_action_seq;
+            cp = result[0].account_action_seq; 
           }
         }
         Vue.$vux.loading.hide();
@@ -448,11 +451,26 @@ const actions = {
       let bytes = CryptoJS.AES.decrypt(item.aesR, item.pwd);
       let plaintext = bytes.toString(CryptoJS.enc.Utf8);
       if (plaintext != ''){
-        const config = {
-          chainId: state.configobj.chainId,
-          keyProvider: plaintext,
-          httpEndpoint: state.configobj.httpEndpoint,
-          authorization: `${item.account}@active`
+        let config = {};
+        if(item.hasOwnProperty('netId')){
+          for(const key of state.configList){
+            if(key.netId == item.netId){
+              config = {
+                chainId: state.configobj.chainId,
+                keyProvider: plaintext,
+                httpEndpoint: state.configobj.httpEndpoint,
+                authorization: `${item.account}@active`
+              }
+              break;
+            }
+          }
+        }else{
+          config = {
+            chainId: state.configobj.chainId,
+            keyProvider: plaintext,
+            httpEndpoint: state.configobj.httpEndpoint,
+            authorization: `${item.account}@active`
+          }
         }
         let eos = Eos(config);
         eos.contract(item.code).then(contract => {
@@ -534,6 +552,9 @@ const mutations = {
     state.AccountList.push(payload.Account);
     //state = {...state,...payload};
     /* return {...state, ...payload} */
+  },
+  updateAllAccountList(state, payload){
+    state.AccountList = payload;
   },
   clearTokenList(state){
     state.TokenList = [];

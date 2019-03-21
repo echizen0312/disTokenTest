@@ -9,7 +9,7 @@
             <span class="c_card_sb" v-text="`所在链：${item.netName}`"></span>
           </div>
           <div>
-            <a href="javascript:" class="delIcon"></a>
+            <a href="javascript:" class="delIcon" @click="DelAccount($event,item.id)"></a>
           </div>
         </div>
       </div>
@@ -39,6 +39,16 @@ export default {
     },
     GoCreate(){
       this.$router.push('/CreateAccount');
+    },
+    DelAccount(e,i){
+      e.stopPropagation();
+      let list = [];
+      for(const key of this.AccountList){
+        if(key.id != i){
+          list.push(key);
+        }
+      }
+      this.$store.commit('EosConfig/updateAllAccountList',list);
     },
     GoWallet(id){
       const that = this;

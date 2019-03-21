@@ -73,6 +73,9 @@ import {mapState} from 'vuex';
         if(path.includes('GameList')){
           that.nowIndex = 1;
         }
+        if(path.includes('RequestTransfer')){
+          that.nowIndex = 2;
+        }
       }
     },
     computed: {
