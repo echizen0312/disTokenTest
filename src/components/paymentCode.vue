@@ -18,7 +18,7 @@
       </div>
     </view-box>
     <div v-transfer-dom>
-      <popup v-model="payform" class="vux-1px-r" height="100%">
+      <popup v-model="payform" height="100%">
         <div class="pop_content">
           <x-header slot="header" :title="title" style="width:100%;position:fixed;height: 46px;left:0;top:0;z-index:100;background: #05a8f5;"></x-header>
           <div class="req">
@@ -319,6 +319,7 @@ export default {
     position: absolute;
     width: 100%;
     bottom: 60px;
+    box-sizing: border-box;
     .createuse{
       color: #FFFFFF;
       background-color: #14d6a4;

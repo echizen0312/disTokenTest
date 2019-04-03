@@ -16,6 +16,11 @@
         <img v-show="nowIndex!=2" slot="icon" src="../../static/ico_10_g.png">
         <span slot="label">买币</span>
       </tabbar-item>
+      <tabbar-item @on-item-click="Gotabbar">
+        <img v-show="nowIndex==3" slot="icon" src="../../static/ico_24_b.png">
+        <img v-show="nowIndex!=3" slot="icon" src="../../static/ico_24_g.png">
+        <span slot="label">我的</span>
+      </tabbar-item>
     </tabbar>
     <router-view/>
   </div>
@@ -61,6 +66,10 @@ import {mapState} from 'vuex';
             break
           case 2:
             location.href = 'http://c2c.naturetoken.io/'
+            //that.$router.push('/PerCenter')
+            break
+            case 3:
+            location.href = 'http://c2c.naturetoken.io/pay/'
             //that.$router.push('/PerCenter')
             break
         }

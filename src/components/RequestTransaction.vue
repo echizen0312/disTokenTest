@@ -92,7 +92,7 @@ export default {
     fuckWchart(){
       const that =this;
       setTimeout(() => {
-        if(that.$refs.fuckwxa.isFocus || that.$refs.fuckwxb.isFocus || that.$refs.fuckwxc.isFocus) return;
+        if(that.$refs.fuckwxb.isFocus || that.$refs.fuckwxc.isFocus) return;
         const scrollHeight = document.documentElement.scrollTop || document.body.scrollTop || 0;
         window.scrollTo(0, Math.max(scrollHeight - 1, 0));
       }, 100);
